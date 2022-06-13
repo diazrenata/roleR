@@ -1,46 +1,57 @@
-#' @title An S4 class to specify a local community within a ROLE model 
+#' @title Local community
+#' 
+#' @description An S4 class to specify the state of a local community
 #'
-#' @slot abundanceIndv a numeric vector of 0s and 1s specifying the binary abundance (alive or dead) 
-#' of each individual
-#' @slot speciesIDsIndv a numeric vector specifying species of each individual as
-#' an index of the species vectors
-#' @slot traitsIndv a numeric vector of trait values for each individual
-#' @slot abundanceSp abundances of every species i held at index i
-#' @slot traitsSp traits of every species i held at index i
-#' @slot gdiversitiesSp genetic diversities of species
+#' @slot indSppTrt numeric matrix with rows for individuals; column 1 is species
+#'     ID (matches row number in `metaComm@sppData`); column 2 is trait value; 
+#'     column 3 is sequence (maybe? maybe shouldn't have it)
+#' @slot indSeqs character matrix with rows for individuals; column 1 is 
+#'     sequences for each individual
+#' @slot sppGenDiv a numeric matrix with rows for species; column 1 is species
+#'     level genetic diversity
+#' 
+#' @rdname localComm
 #' @export
 
 setClass('localComm',
-         slots = c(abundanceIndv = 'numeric',
-                   speciesIDsIndv = 'numeric',
-                   traitsIndv = 'numeric',
-                   abundanceSp = 'numeric',
-                   traitsSp = 'numeric',
-                   gdiversitiesSp = 'numeric'))
+         slots = c(indSppTrt = 'matrix',
+                   indSeqs = 'matrix',
+                   sppGenDiv = 'matrix'))
+
+
 # constructor 
-localComm <- function(abundanceIndv, speciesIDsIndv, traitsIndv, 
-                      abundanceSp, traitsSp,gdiversitiesSp) {
+#' @rdname localComm
+#' @export
+
+localComm <- function(indSppTrt, indSeqs, sppGenDiv) {
   return(new('localComm',
-      abundanceIndv = abundanceIndv,
-      speciesIDsIndv = speciesIDsIndv,
-      traitsIndv = traitsIndv,
-      abundanceSp = abundanceSp,
-      traitsSp = traitsSp,
-      gdiversitiesSp = gdiversitiesSp))
+             indSppTrt = indSppTrt,
+             indSeqs = indSeqs,
+             sppGenDiv = sppGenDiv))
 }
 
-#' @title An S4 class to specify a meta community within a ROLE model 
+
+
+
+#' @title Meta community
+#' 
+#' @description An S4 class to specify the state of a meta community
 #'
-#' @slot abundanceSp abundances of every species i held at index i
-#' @slot traitsSp traits of every species i held at index i
+#' @slot sppAbundTrt numeric matrix with rows for species (row number is 
+#'     species ID); column 1 is relative abundance; column 2 is trait mean
+#' 
+#' @rdname metaComm
 #' @export
 
 setClass('metaComm',
-         slots = c(abundanceSpM = 'numeric',
-                   traitsSpM = 'matrix'))
-# constructor
-metaComm <- function(abundanceSpM,traitsSpM) {
-  return(new('metaComm',
-      abundanceSpM = abundanceSpM,
-      traitsSpM = traitsSpM))
+         slots = c(sppAbundTrt = 'matrix'))
+
+
+# constructor 
+#' @rdname metaComm
+#' @export
+
+metaComm <- function(sppAbundTrt) {
+  return(new('localComm',
+             sppAbundTrt = sppAbundTrt))
 }
