@@ -20,7 +20,7 @@ roleModel <- function(params) {
     if(J < 100) {
         stop('`individuals_local` (set in `roleParams`) cannot be less than 100')
     }
-
+    
     Sm <- params@species_meta
     if(Sm < 200) {
         stop('`species_meta` (set in `roleParams`) cannot be less than 200')
@@ -68,9 +68,9 @@ roleModel <- function(params) {
         }
     }
     
-    new('roleModel', 
-        params =  params, 
-        modelSteps = modelSteps)
+    return(new('roleModel', 
+               params =  params, 
+               modelSteps = modelSteps))
 }
 
 
