@@ -7,29 +7,11 @@ Author: Andrew Rominger, Isaac Overcast, Megan Ruffley, Mike Hickerson, Jacob Id
 Maintainer: Andrew Rominger <andrew.rominger@maine.edu>
 Description: A simulation-based model the captures many processes across ecology and evolution and jointly predicts multi-dimensional biodiversity data.
 License: GPL (>= 2)
-Depends: R (>= 3.2)
-Imports: Rcpp (>= 1.0.4), TreeSim, ape, pika
+Depends: R (>= 3.2), methods
+Imports: ape, pika
 Suggests:
     testthat, 
     hillR
 Remotes:
-    ajrominger/pika, 
-    bodkan/slimr
-LinkingTo: Rcpp, RcppArmadillo
+    ajrominger/pika
 RoxygenNote: 7.1.2
-Collate:
-    'RcppExports.R'
-    'comm.R'
-    'fitRole.R'
-    'prepRebuild.R'
-    'rolePhylo.R'
-    'roleParams.R'
-    'roleArguments.R'
-    'roleData.R'
-    'roleModel.R'
-    'roleExperiment.R'
-    'simulateGeneticDiversitiesSp.R'
-    'addHillStats.R'
-    'getStates.R'
-    'getTimeseries.R'
-    'zzz.R'
