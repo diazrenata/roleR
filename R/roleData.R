@@ -17,9 +17,9 @@ setClass('roleData',
 #' @export
 
 roleData <- function(localComm, metaComm, phylo) {
-  return(new('roleData',
-             localComm = localComm,
-             metaComm = metaComm,
-             phylo = phylo))
+    return(new('roleData',
+               localComm = localComm,
+               metaComm = metaComm,
+               phylo = phylo))
 }
 
