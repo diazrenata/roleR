@@ -78,58 +78,32 @@ setAs(from = 'roleModel', to = 'roleExperiment',
 
 
 # rbind method for `roleExperiment` class
-rbind.roleExperiment <- function(...) {
-    allEx <- list(...)
-    
-    out <- allEx[[1]]
-    
-    if(length(allEx) > 1) {
-        for(i in 2:length(allEx)) {
-            # keep track of growing mod_id max index
-            j <- max(out@experimentMeta$mod_id)
-            
-            # extract next experiment
-            thisEx <- allEx[[i]]
-            
-            # augment mod_id
-            thisEx@experimentMeta$mod_id <-
-                thisEx@experimentMeta$mod_id + j
-            
-            # combine with `out`
-            out@experimentMeta <- rbind(out@experimentMeta,
-                                        thisEx@experimentMeta)
-            out@modelRuns <- c(out@modelRuns,
-                               thisEx@modelRuns)
-            out@allParams <- c(out@allParams,
-                               thisEx@allParams)
-        }
-    }
-    
-    return(out)
-}
 
+setMethod('rbind2', signature = c('roleExperiment', 'roleExperiment'), 
+          definition = function(x, y) {
+              out <- x
+              thisEx <- y
+              
+              # keep track of growing mod_id max index
+              j <- max(out@experimentMeta$mod_id)
+              
+              # augment mod_id
+              thisEx@experimentMeta$mod_id <-
+                  thisEx@experimentMeta$mod_id + j
+              
+              # combine with `out`
+              out@experimentMeta <- rbind(out@experimentMeta,
+                                          thisEx@experimentMeta)
+              out@modelRuns <- c(out@modelRuns,
+                                 thisEx@modelRuns)
+              out@allParams <- c(out@allParams,
+                                 thisEx@allParams)
+              
+              return(out)
+          }
+)
 
-
-
-
-# testing
-# source('R/comm.R')
-# source('R/rolePhylo.R')
-# source('R/roleData.R')
-# source('R/roleParams.R')
-# source('R/roleModel.R')
-# 
-# params <- roleParams(individuals_local = 100, individuals_meta = 1000,
-#                      species_meta = 500, speciation_local = 0.1,
-#                      speciation_meta = 1, extinction_meta = 0.8,
-#                      trait_sigma = 1, env_sigma = 1,
-#                      comp_sigma = 1, dispersal_prob = 0.1, mutation_rate = 0.01,
-#                      equilib_escape = 1, num_basepairs = 250,
-#                      init_type = 'oceanic_island', niter = 100,
-#                      niterTimestep = 10)
-# 
-# x <- roleModel(params)
-# y <- as(x, 'roleExperiment')
-# 
-# boo <- do.call(rbind, list(y, y, y))
-# boo@experimentMeta
+setMethod('rbind2', signature = c('roleExperiment', 'missing'), 
+          definition = function(x, y) {
+              return(x)
+          })
