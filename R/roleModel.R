@@ -68,6 +68,11 @@ roleModel <- function(params) {
         }
     }
     
+    # save last step if haven't already
+    if(i %% niterTimestep != 0) {
+        modelSteps <- c(modelSteps, dat)
+    }
+    
     return(new('roleModel', 
                params =  params, 
                modelSteps = modelSteps))
