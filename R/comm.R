@@ -52,6 +52,6 @@ setClass('metaComm',
 #' @export
 
 metaComm <- function(sppAbundTrt) {
-  return(new('localComm',
+  return(new('metaComm',
              sppAbundTrt = sppAbundTrt))
 }
