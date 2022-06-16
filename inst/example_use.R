@@ -10,6 +10,13 @@ params1 <- roleParams(individuals_local = 100, individuals_meta = 1000,
                       init_type = 'oceanic_island', niter = 100,
                       niterTimestep = 50)
 
+# make a set of params with some params missing
+params0 <- roleParams(individuals_local = 100, individuals_meta = 1000,
+                      species_meta = 500, speciation_local = 0.1,
+                      speciation_meta = 1, extinction_meta = 0.8,
+                      init_type = 'oceanic_island', niter = 100,
+                      niterTimestep = 50)
+
 # make another slightly different set
 params2 <- params1
 slot(params2, 'init_type') <- 'bridge_island'
@@ -28,25 +35,38 @@ foo <- oneExp[oneExp@experimentMeta$iterations <= 50, ]
 foo@experimentMeta
 length(foo@allParams)
 
+boo <- oneExp[oneExp@experimentMeta$mod_id == 1, ]
+boo@experimentMeta
+length(boo@allParams)
 
 # get final state for one model run
 foo <- getFinalState(oneMod)
 length(foo@modelSteps)
 
 # get final state from experiment
-foo <- getFinalState(oneExp, modID = 1)
+foo <- getFinalState(oneExp)
 foo@experimentMeta
 
 foo <- getFinalState(oneExp)
 foo@experimentMeta
 
 
-# get sum stats for one roleData object
+# get a single sum stat for one roleData object
 oneDat <- getFinalState(oneMod)
-rawAbundance(oneDat@modelSteps[[1]])
-rawTraits(oneDat@modelSteps[[1]])
-rawRichness(oneDat@modelSteps[[1]])
+oneDat <- oneDat@modelSteps[[1]]
+rawAbundance(oneDat)
+rawTraits(oneDat)
+richness(oneDat)
 
+
+# use `getSumStats` to get multiple sum stats at once for one roleData object
+
+getSumStats(oneDat, 
+            list(abund = rawAbundance, rich = richness))
+
+getSumStats(oneDat, 
+            list(rich = richness, abund = rawAbundance,
+                 test = function(x) rawAbundance(x)[[1]][1:3]))
 
 # get sum stats across runs for one model
 

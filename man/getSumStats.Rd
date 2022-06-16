@@ -2,17 +2,27 @@
 % Please edit documentation in R/getSumStats.R
 \name{getSumStats}
 \alias{getSumStats}
+\alias{getSumStats,roleData-method}
+\alias{getSumStats,roleModel-method}
+\alias{getSumStats,roleExperiment-method}
 \title{Get summary statistics for RoLE objects}
 \usage{
 getSumStats(x, funs, ...)
+
+\S4method{getSumStats}{roleData}(x, funs)
+
+\S4method{getSumStats}{roleModel}(x, funs, ...)
+
+\S4method{getSumStats}{roleExperiment}(x, funs, ...)
 }
 \arguments{
 \item{x}{the object to calculate sum stats across}
 
-\item{...}{additional named parameters passed to `fun`}
+\item{funs}{a named list of function to calculate the sum stats; can be a 
+named list with a single function or many functions, but must be a 
+named list of functions}
 
-\item{fun}{the function(s) calculating the sum stats; can be a single 
-function or a list of functions}
+\item{...}{additional parameters, ignored}
 }
 \description{
 Applies different summary stats functions to `roleExperiment`,

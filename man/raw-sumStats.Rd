@@ -7,9 +7,7 @@
 \alias{rawGenDiv}
 \alias{rawSeqs}
 \alias{rawBranchLengths}
-\alias{apePhylo}
-\alias{rawRichness}
-\alias{hillStats}
+\alias{rawApePhylo}
 \title{Get raw data from `roleData` objects}
 \usage{
 rawAbundance(x, ...)
@@ -24,23 +22,24 @@ rawSeqs(x, ...)
 
 rawBranchLengths(x, ...)
 
-apePhylo(x, ...)
-
-rawRichness(x, ...)
-
-hillStats(x, q, type, ...)
+rawApePhylo(x, ...)
 }
 \arguments{
-\item{x}{the `roleData` object to calculate Hill numbers from}
+\item{x}{the `roleData` object to get raw data from}
 
 \item{...}{additional parameters, ignored}
-
-\item{q}{the Hill number exponent}
-
-\item{type}{Hill number type; one of 'abundance', 'trait', 'phylo'}
+}
+\value{
+a list with one element, inside that one element is a vector of the
+    raw data
 }
 \description{
 Gets raw data
-
-Gets Hill numbers
+}
+\details{
+These functions return a list of length one (with summary statistics 
+    inside that list) because the summary stats themselves could be variable
+    length. This is distinct from other summary stat functions which will
+    always return a fixed length value.  When using raw summary stat 
+    functions in `getSumStats` they will be returned in a list column
 }

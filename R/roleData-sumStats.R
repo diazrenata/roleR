@@ -3,6 +3,14 @@
 #' @param x the `roleData` object to get raw data from
 #' @param ... additional parameters, ignored
 #' 
+#' @return a list with one element, inside that one element is a vector of the
+#'     raw data
+#' 
+#' @details These functions return a list of length one (with summary statistics 
+#'     inside that list) because the summary stats themselves could be variable
+#'     length. This is distinct from other summary stat functions which will
+#'     always return a fixed length value.  When using raw summary stat 
+#'     functions in `getSumStats` they will be returned in a list column
 #' 
 #' @rdname raw-sumStats
 #' @export
@@ -15,7 +23,7 @@ setGeneric('rawAbundance',
 setMethod('rawAbundance', 
           signature = 'roleData', 
           definition = function(x) {
-              tabulate(x@localComm@indSppTrt[, 1])
+              list(tabulate(x@localComm@indSppTrt[, 1]))
           }
 )
 
@@ -31,7 +39,7 @@ setGeneric('rawSppID',
 setMethod('rawSppID', 
           signature = 'roleData', 
           definition = function(x) {
-              x@localComm@indSppTrt[, 1]
+              list(x@localComm@indSppTrt[, 1])
           }
 )
 
@@ -46,7 +54,7 @@ setGeneric('rawTraits',
 setMethod('rawTraits', 
           signature = 'roleData', 
           definition = function(x) {
-              x@localComm@indSppTrt[, 2]
+              list(x@localComm@indSppTrt[, 2])
           }
 )
 
@@ -62,7 +70,7 @@ setGeneric('rawGenDiv',
 setMethod('rawGenDiv', 
           signature = 'roleData', 
           definition = function(x) {
-              x@localComm@sppGenDiv[, 1]
+              list(x@localComm@sppGenDiv[, 1])
           }
 )
 
@@ -79,7 +87,7 @@ setGeneric('rawSeqs',
 setMethod('rawSeqs', 
           signature = 'roleData', 
           definition = function(x) {
-              x@localComm@indSeqs[, 1]
+              list(x@localComm@indSeqs[, 1])
           }
 )
 
@@ -95,7 +103,7 @@ setGeneric('rawBranchLengths',
 setMethod('rawBranchLengths', 
           signature = 'roleData', 
           definition = function(x) {
-              x@phylo@l[x@phylo@e[, 1] != -1]
+              list(x@phylo@l[x@phylo@e[, 1] != -1])
           }
 )
 
@@ -104,43 +112,30 @@ setMethod('rawBranchLengths',
 #' @rdname raw-sumStats
 #' @export
 
-setGeneric('apePhylo', 
-           def = function(x, ...) standardGeneric('apePhylo'), 
+setGeneric('rawApePhylo', 
+           def = function(x, ...) standardGeneric('rawApePhylo'), 
            signature = 'x')
 
-setMethod('apePhylo', 
+setMethod('rawApePhylo', 
           signature = 'roleData', 
           definition = function(x) {
-              as(x@phylo, 'phylo')
+              list(as(x@phylo, 'phylo'))
           }
 )
 
 
-# species richness
-#' @rdname raw-sumStats
-#' @export
-
-setGeneric('rawRichness', 
-           def = function(x, ...) standardGeneric('rawRichness'), 
-           signature = 'x')
-
-setMethod('rawRichness', 
-          signature = 'roleData', 
-          definition = function(x) {
-              length(unique(x@localComm@indSppTrt[, 1]))
-          }
-)
 
 
-#' @title Get Hill numbers from `roleData` objects
-#' @description Gets Hill numbers
+
+#' @title Diversity summary statistics for `roleData` objects
+#' @description Gets diversity summary statistics including Hill numbers
 #' @param x the `roleData` object to calculate Hill numbers from
 #' @param q the Hill number exponent 
 #' @param type Hill number type; one of 'abundance', 'trait', 'phylo'
 #' @param ... additional parameters, ignored
 #' 
 #' 
-#' @rdname raw-sumStats
+#' @rdname div-sumStats
 #' @export
 
 setGeneric('hillStats', 
@@ -148,3 +143,17 @@ setGeneric('hillStats',
            signature = 'x')
 
 
+# species richness
+#' @rdname div-sumStats
+#' @export
+
+setGeneric('richness', 
+           def = function(x, ...) standardGeneric('richness'), 
+           signature = 'x')
+
+setMethod('richness', 
+          signature = 'roleData', 
+          definition = function(x) {
+              length(unique(x@localComm@indSppTrt[, 1]))
+          }
+)
