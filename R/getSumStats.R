@@ -5,7 +5,10 @@
 #' @param funs a named list of function to calculate the sum stats; can be a 
 #'     named list with a single function or many functions, but must be a 
 #'     named list of functions
-#' @param ... additional parameters, ignored
+#' @param moreArgs an optional named list of additional arguments to pass to the
+#'     functions listed in `funs`; if given, list names must match those in 
+#'     `funs`. Note: not all names in `funs` need to appear in `moreArgs`
+#' @param ... ignored
 #' 
 #' @details users can define their own functions, so long as they work on any
 #'     object of class `roleData`
@@ -14,7 +17,7 @@
 #' @export
 
 setGeneric('getSumStats', 
-           def = function(x, funs, ...) standardGeneric('getSumStats'), 
+           def = function(x, funs, moreArgs, ...) standardGeneric('getSumStats'), 
            signature = 'x')
 
 
@@ -24,8 +27,8 @@ setGeneric('getSumStats',
 
 setMethod('getSumStats', 
           signature = 'roleData', 
-          definition = function(x, funs) {
-              bigFun <- .funApply(funs)
+          definition = function(x, funs, moreArgs) {
+              bigFun <- .funApply(funs, moreArgs)
               
               return(bigFun(x))
           }
@@ -38,8 +41,12 @@ setMethod('getSumStats',
 
 setMethod('getSumStats', 
           signature = 'roleModel', 
-          definition = function(x, funs, ...) {
-              print('foo to roleModel')
+          definition = function(x, funs, moreArgs) {
+              bigFun <- .funApply(funs, moreArgs)
+              
+              o <- lapply(x@modelSteps, bigFun)
+              
+              return(do.call(rbind, o))
           }
 )
 
@@ -50,23 +57,38 @@ setMethod('getSumStats',
 
 setMethod('getSumStats', 
           signature = 'roleExperiment', 
-          definition = function(x, funs, ...) {
-              print('foo to roleExperiment')
+          definition = function(x, funs, moreArgs) {
+              bigFun <- .funApply(funs, moreArgs)
+              
+              o <- lapply(x@modelRuns, bigFun)
+              
+              return(do.call(rbind, o))
           }
 )
 
 
 
 # helper function to make a new synthetic function from a list of functions 
-.funApply <- function(funs) {
+.funApply <- function(funs, moreArgs) {
+    if(missing(moreArgs)) moreArgs <- list(NULL)
+    
     newFun <- function(x) {
         o <- lapply(1:length(funs), function(i) {
             # get function from list
             f <- funs[[i]]
             fname <- names(funs[i])
             
+            # get more args (if they exist)
+            fargs <- moreArgs[[fname]]
+            if(is.null(fargs)) {
+                allArgs <- list(x = x)
+            } else {
+                allArgs <- c(list(x = x), fargs)
+            }
+            
+            # browser()
             # function value
-            val <- f(x)
+            val <- do.call(f, allArgs)
             
             # name the values
             if(length(val) > 1) {
@@ -105,3 +127,4 @@ setMethod('getSumStats',
     # above code
     return(newFun)
 }
+

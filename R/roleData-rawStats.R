@@ -122,38 +122,3 @@ setMethod('rawApePhylo',
               list(as(x@phylo, 'phylo'))
           }
 )
-
-
-
-
-
-#' @title Diversity summary statistics for `roleData` objects
-#' @description Gets diversity summary statistics including Hill numbers
-#' @param x the `roleData` object to calculate Hill numbers from
-#' @param q the Hill number exponent 
-#' @param type Hill number type; one of 'abundance', 'trait', 'phylo'
-#' @param ... additional parameters, ignored
-#' 
-#' 
-#' @rdname div-sumStats
-#' @export
-
-setGeneric('hillStats', 
-           def = function(x, q, type, ...) standardGeneric('rawBranchLengths'), 
-           signature = 'x')
-
-
-# species richness
-#' @rdname div-sumStats
-#' @export
-
-setGeneric('richness', 
-           def = function(x, ...) standardGeneric('richness'), 
-           signature = 'x')
-
-setMethod('richness', 
-          signature = 'roleData', 
-          definition = function(x) {
-              length(unique(x@localComm@indSppTrt[, 1]))
-          }
-)

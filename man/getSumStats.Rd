@@ -7,13 +7,13 @@
 \alias{getSumStats,roleExperiment-method}
 \title{Get summary statistics for RoLE objects}
 \usage{
-getSumStats(x, funs, ...)
+getSumStats(x, funs, moreArgs, ...)
 
-\S4method{getSumStats}{roleData}(x, funs)
+\S4method{getSumStats}{roleData}(x, funs, moreArgs)
 
-\S4method{getSumStats}{roleModel}(x, funs, ...)
+\S4method{getSumStats}{roleModel}(x, funs, moreArgs)
 
-\S4method{getSumStats}{roleExperiment}(x, funs, ...)
+\S4method{getSumStats}{roleExperiment}(x, funs, moreArgs)
 }
 \arguments{
 \item{x}{the object to calculate sum stats across}
@@ -22,7 +22,11 @@ getSumStats(x, funs, ...)
 named list with a single function or many functions, but must be a 
 named list of functions}
 
-\item{...}{additional parameters, ignored}
+\item{moreArgs}{an optional named list of additional arguments to pass to the
+functions listed in `funs`; if given, list names must match those in 
+`funs`. Note: not all names in `funs` need to appear in `moreArgs`}
+
+\item{...}{ignored}
 }
 \description{
 Applies different summary stats functions to `roleExperiment`,
