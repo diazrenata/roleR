@@ -16,13 +16,13 @@
 #' @export
 
 setGeneric('hillAbund', 
-           def = function(x, q, ...) standardGeneric('hillAbund'), 
+           def = function(x, q = 1:4, ...) standardGeneric('hillAbund'), 
            signature = 'x')
 
 
 setMethod('hillAbund', 
           signature = 'roleData', 
-          definition = function(x, q) {
+          definition = function(x, q = 1:4) {
               X <- rawAbundance(x)[[1]]
               X <- X[X > 0]
               
@@ -50,13 +50,13 @@ setMethod('hillAbund',
 #' @export
 
 setGeneric('hillGenetic', 
-           def = function(x, q, ...) standardGeneric('hillGenetic'), 
+           def = function(x, q = 1:4, ...) standardGeneric('hillGenetic'), 
            signature = 'x')
 
 
 setMethod('hillGenetic', 
           signature = 'roleData', 
-          definition = function(x, q) {
+          definition = function(x, q = 1:4) {
               X <- rawGenDiv(x)[[1]]
               X <- X[!is.na(X)]
               
@@ -70,13 +70,13 @@ setMethod('hillGenetic',
 #' @export
 
 setGeneric('hillTrait', 
-           def = function(x, q, ...) standardGeneric('hillTrait'), 
+           def = function(x, q = 1:4, ...) standardGeneric('hillTrait'), 
            signature = 'x')
 
 
 setMethod('hillTrait', 
           signature = 'roleData', 
-          definition = function(x, q) {
+          definition = function(x, q = 1:4) {
               spp <- rawSppID(x)[[1]]
               trt <- rawTraits(x)[[1]]
               
@@ -125,13 +125,13 @@ setMethod('hillTrait',
 #' @export
 
 setGeneric('hillPhylo', 
-           def = function(x, q, ...) standardGeneric('hillPhylo'), 
+           def = function(x, q = 1:4, ...) standardGeneric('hillPhylo'), 
            signature = 'x')
 
 
 setMethod('hillPhylo', 
           signature = 'roleData', 
-          definition = function(x, q) {
+          definition = function(x, q = 1:4) {
               return(q)
           }
 )

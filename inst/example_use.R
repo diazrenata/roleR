@@ -62,6 +62,10 @@ oneDat <- oneDat@modelSteps[[1]]
 rawAbundance(oneDat)
 rawTraits(oneDat)
 richness(oneDat)
+hillAbund(oneDat) # default q = 1:4
+hillTrait(oneDat)
+hillGenetic(oneDat)
+hillPhylo(oneDat)
 
 
 # use `getSumStats` to get multiple sum stats at once for one roleData object
@@ -71,7 +75,7 @@ getSumStats(oneDat,
 
 getSumStats(oneDat, 
             list(rich = richness, abund = rawAbundance,
-                 hillAbund = hillStats))
+                 hillAbund = hillAbund))
 
 # get sum stats across runs for one model
 
@@ -79,8 +83,11 @@ getSumStats(oneMod, list(abund = rawAbundance, rich = richness))
 
 
 # get sum stats across runs for one experiment
-getSumStats(oneExp, list(abund = rawAbundance, rich = richness))
+getSumStats(oneExp, list(abund = rawAbundance, rich = richness, 
+                         hillAbund = hillAbund))
 
+getSumStats(oneExp, list(rich = richness, hillAbund = hillAbund), 
+            moreArgs = list(hillAbund = list(q = 1:5)))
 
 
 
