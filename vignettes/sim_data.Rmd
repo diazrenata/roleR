@@ -1,0 +1,28 @@
+---
+title: "Simulating data with `roleR`"
+author: "A. J. Rominger"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+This vignette only covers simulating data using the `roleR` package implementation of the RoLE model.
+
+## Quick start
+
+The flow of simulating data is shows in the following figure.
+
+
+
+
