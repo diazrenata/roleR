@@ -50,6 +50,19 @@ setMethod("[", "roleExperiment", function(x, i, j, ..., drop = FALSE) {
 })
 
 
+# column selection method for `roleExperiment`
+#' @export
+
+setMethod("$", "roleExperiment", function(x, name) {
+    if(name %in% names(x@experimentMeta)) {
+        return(x@experimentMeta[, name])
+    } else {
+        stop('no $ method for object without metadata')
+    }
+})
+
+
+
 # print method for `roleExperiment`
 #' @export
 
